@@ -7,7 +7,7 @@ module tgr::Syntax
 
 start syntax Program = TM* tms Simulation* simulations;
 
-syntax TM = "TM" Str name "{" Trans* trs "}";
+syntax TM = "TM" Str name ":" "init" "(" Str init ")" "{" Trans* trs "}";
 
 syntax Trans = Str source Char read Char replace Dir dir Str target;
 

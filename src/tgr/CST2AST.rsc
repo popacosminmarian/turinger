@@ -17,7 +17,7 @@ import tgr::Syntax;
  }
  
  ATM cst2ast(TM t) {
- 	return tm("<t.name>", [cst2ast(p) | (Trans tr <- t.trans)]);
+ 	return tm("<t.name>", "<t.init>", [cst2ast(p) | (Trans tr <- t.trans)]);
  }
  
  ASim cst2ast(Sim s) {
