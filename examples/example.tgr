@@ -5,3 +5,4 @@ TM a {
 }
 
 simulate a(1001) 100
+simulate a(100_b1) 100
