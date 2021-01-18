@@ -5,22 +5,22 @@ module tgr::Syntax
 */
 
 
-start syntax Program = TM* tms Main main;
+start syntax Program = TM* tms Simulation* simulations;
 
-syntax TM = "TM" Str name "{" Trans* trans "}";
+syntax TM = "TM" Str name "{" Trans* trs "}";
 
-syntax Trans = Str source CharOrStar read CharOrStar replace Dir dir Str target;
-syntax CharOrStar = Char | "*";
+syntax Trans = Str source Char read Char replace Dir dir Str target;
+
 syntax Dir = "l" | "L" | "r" | "R" | "*";
 
-syntax Main = "main" "{" Simulation* simulations "}";
+syntax Simulation = "simulate" Str tm "(" Input input ")" Int steps;
 
-syntax Simulation = "simulate" Str tm "(" Char* input ")" Int steps;
+syntax Input = Char* \ "*";
 
 // Helpers and lexicals
-lexical Int = [0-9]+;
-lexical Bool = "yes" | "no";
+lexical Int = [0-9]+ !>> [0-9];
+lexical Bool = "true" | "false";
 lexical Char = [A-Za-z0-9_*];
 lexical Str = [A-Za-z][A-Za-z0-9_\-]*;
-lexical LAYOUT = [\t-\n\r\ ];
-layout LAYOUTLIST = LAYOUT*  !>> [\t-\n\r\ ];
+lexical LAYOUT = [\t-\n\r\ ] | @category="Comment" "@" ![@]+ "@";
+layout LAYOUTLIST = LAYOUT*  !>> [\t-\n\r\ @];

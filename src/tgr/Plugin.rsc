@@ -1,7 +1,7 @@
 module tgr::Plugin
 
 import ParseTree;
-import tgr::IDE;
+import util::IDE;
 import tgr::Check;
 import tgr::Parser;
 import tgr::CST2AST;
@@ -17,7 +17,7 @@ bool checkWellformedness(loc fil) {
 	// Transform the parse tree into an abstract syntax tree
 	&T ast = cst2ast(resource);
 	// Check the well-formedness of the program
-	return checkCloudConfiguration(ast);
+	return checkProgram(ast);
 }
 
 /*
@@ -26,7 +26,7 @@ bool checkWellformedness(loc fil) {
 * If there are syntactic errors in the program, no highlighting will be shown in the editor.
 */
 void main() {
-	registerLanguage("TGR - GLT", "tgr", Tree(str _, loc path) {
+	registerLanguage("turinger", "tgr", Tree(str _, loc path) {
 		return parseTGR(path);
   	});
 }

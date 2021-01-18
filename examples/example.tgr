@@ -1,0 +1,7 @@
+TM a {
+	l0 0 1 r l1
+	l0 * * * l2
+	l0 _ 1 l l3
+}
+
+simulate a(1001) 100

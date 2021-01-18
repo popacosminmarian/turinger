@@ -1,7 +1,9 @@
 module tgr::AST
 
-/*
- * Define Abstract Syntax for CCL
- *
- * - make sure there is an almost one-to-one correspondence with the grammar (Syntax.rsc)
- */
+public data AProgram = program(list[ATM] tms, list[ASim] simulations);
+
+public data ATM = tm(str name, list[ATrans] transitions);
+
+public data ATrans = trans(str source, str source, str replace, str dir, str target);
+
+public data ASim = sim(str tm, str input, int steps);
