@@ -9,4 +9,4 @@ import tgr::Syntax;
  * This function receives as parameter the path of the file to parse represented as a loc, and returns a parse tree that represents the parsed program.
  */
  
- public Program parseTGR(loc l) = parse(#Program, l);
+ public start[Program] parseTGR(loc l) = parse(#start[Program], l);

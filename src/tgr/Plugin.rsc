@@ -5,6 +5,7 @@ import util::IDE;
 import tgr::Check;
 import tgr::Parser;
 import tgr::CST2AST;
+import tgr::Compile;
 
 /*
 * This function is defined to test the functionality of the whole assignment. It receives a file path as a parameter and returns true if the program satisfies the specification or false otherwise.
@@ -18,6 +19,15 @@ bool checkWellformedness(loc fil) {
 	&T ast = cst2ast(resource);
 	// Check the well-formedness of the program
 	return checkProgram(ast);
+}
+
+void compileProgram(loc fil) {
+	// Parsing
+	&T resource = parseTGR(fil);
+	// Transform the parse tree into an abstract syntax tree
+	&T ast = cst2ast(resource);
+	// Compile the program
+	compile(ast);
 }
 
 /*

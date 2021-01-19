@@ -1,5 +1,6 @@
 module tgr::CST2AST
 
+import String;
 import tgr::AST;
 import tgr::Syntax;
 
@@ -12,15 +13,15 @@ import tgr::Syntax;
  
  AProgram cst2ast(start[Program] sf) {
  	Program p = sf.top;
- 	AProgram result = program([cst2ast(p) | (TM tm <- p.tms)], [cst2ast(p) | (Sim s <- p.sims)]);
+ 	AProgram result = program([cst2ast(tm) | (TM tm <- p.tms)], [cst2ast(s) | (Simulation s <- p.simulations)]);
  	return result;
  }
  
  ATM cst2ast(TM t) {
- 	return tm("<t.name>", "<t.init>", [cst2ast(p) | (Trans tr <- t.trans)]);
+ 	return tm("<t.name>", "<t.init>", [cst2ast(tr) | (Trans tr <- t.trs)]);
  }
  
- ASim cst2ast(Sim s) {
+ ASim cst2ast(Simulation s) {
  	return sim("<s.tm>", "<s.input>", toInt("<s.steps>"));
  }
  

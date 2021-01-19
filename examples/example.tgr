@@ -1,8 +1,19 @@
-TM a : init(l0) {
+TM first_tm : init(l0) {
+	@ state l0 -> state l1 @
 	l0 0 1 r l1
+	@ state l0 -> state l2 @
 	l0 * * * l2
+	@ state l0 -> state l3 @
 	l0 _ 1 l l3
 }
 
-simulate a(1001) 100
-simulate a(100_b1) 100
+TM second_tm: init(a0) {
+	@ state a0 -> state a1 @
+	a0 1 _ l a1
+	@ base case @
+	a0 * * * a0
+}
+
+@ simulate the turing machine @
+simulate first_tm(1001) 100
+simulate second_tm(100_b1) 100
