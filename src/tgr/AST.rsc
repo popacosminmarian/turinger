@@ -6,7 +6,7 @@ module tgr::AST
 
 public data AProgram = program(list[ATM] tms, list[ASim] simulations);
 
-public data ATM = tm(str name, str init, list[ATrans] transitions);
+public data ATM = tm(str name, str init, set[ATrans] transitions);
 
 public data ATrans = trans(str source, str read, str replace, str dir, str target);
 

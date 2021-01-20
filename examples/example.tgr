@@ -5,7 +5,7 @@ TM first_tm : {
 	@ state l0 -> state l2 @
 	l0 * * * l2
 	@ state l0 -> state accept @
-	l0 _ 1 l accept
+	l1 _ 1 l accept
 }
 
 TM second_tm: {
@@ -23,7 +23,8 @@ TM third_tm: {
 	@ state l0 -> state l2 @
 	l0 * * * l2
 	@ state l0 -> state l3 @
-	l0 _ 1 l l3
+	l0 1 1 l l3
+	l0 1 1 l l3
 }
 
 @ simulate the turing machine @

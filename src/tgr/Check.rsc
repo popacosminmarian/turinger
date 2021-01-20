@@ -18,10 +18,11 @@ import Type;
 
 // Main check function
 bool checkProgram(AProgram program) {
-	println("-- CHECKING PROGRAM --");
+	log("-- CHECKING PROGRAM --");
 	return checkTMNames(program)
 		&& checkSimulatedTMs(program)
 		&& checkTMFinalStates(program)
+		&& checkTMDet(program)
 		&& succes();
 }
 
@@ -36,7 +37,7 @@ bool checkTMNames(AProgram program) {
 		return false;
 	}
 	
-	println("No duplicate TM names found.");
+	log("No duplicate TM names found.");
 	return true;
 }
 
@@ -54,7 +55,7 @@ bool checkSimulatedTMs(AProgram program) {
 		return false;
 	}
 	
-	println("No non-existent TM names found.");
+	log("No non-existent TM names found.");
 	return true;
 }
 
@@ -67,22 +68,53 @@ bool checkTMFinalStates(AProgram program) {
 		// Check final states
 		if ("accept" in states) {
 			if ("reject" in states) {
-				println("TM " + tm.name + " has accept and reject states.");
+				log("TM " + tm.name + " has accept and reject states.");
 			} else {
-				println("TM " + tm.name + " has accept state.");
+				log("TM " + tm.name + " has accept state.");
 			}
 		} else {
 			error("TM " + tm.name + " has no accept state");
 			return false;
 		}
 	}
+	
+	log("All TMs have accept (and/or reject) states.");
+	return true;
+}
+
+// Check that all TMs are deterministic ( (source, read) is PK for transitions)
+bool checkTMDet(AProgram program) {
+	for (/ATM tm := program.tms) {
+		// Get first duplicate pair from tm
+		tuple[str, str] dup = getFirstDupSourceReadPair(tm);
+		
+		// Check if TM is nondet
+		if (dup != <"OK", "OK">) {
+			error("TM " + tm.name + ": state " + dup[0] + " handles symbol \'" + dup[1] + "\' twice");
+			return false;
+		}
+	}
+	
+	log("All TMs are deterministic.");
 	return true;
 }
 
 
 
-
 /* ----- HELPER METHODS ----- */
+
+tuple[str, str] getFirstDupSourceReadPair(ATM tm) {
+	list[tuple[str, str]] keys = [];
+	list[tuple[str, str, str, str, str]] transitions = []; // for duplicates
+	for (/ATrans trans := tm.transitions) {
+		if (<trans.source, trans.read> in keys) {
+			return <trans.source, trans.read>;
+		} else {
+			keys = keys + <trans.source, trans.read>;
+		}
+	}
+	return <"OK", "OK">;
+}
 
 set[str] getAllTMStates(ATM tm) {
 	set[str] states = {tm.init};
@@ -111,6 +143,10 @@ list[str] getSimTMNames(AProgram program) {
 	return names;
 }
 
+void log(str msg) {
+	println(msg);
+}
+
 bool succes() {
 	println("Check successful!\n");
 	return true;
@@ -118,5 +154,5 @@ bool succes() {
 
 // Method for printing errors
 void error(str msg) {
-	println("ERROR: " + msg + "\n");
+	log("ERROR: " + msg + "\n");
 }

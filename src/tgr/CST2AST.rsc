@@ -15,7 +15,7 @@ AProgram cst2ast(start[Program] sf) {
 }
  
 ATM cst2ast(TM t) {
-	return tm("<t.name>", "<t.init>", [cst2ast(tr) | (Trans tr <- t.trs)]);
+	return tm("<t.name>", "<t.init>", {cst2ast(tr) | (Trans tr <- t.trs)});
 }
  
 ASim cst2ast(Simulation s) {
