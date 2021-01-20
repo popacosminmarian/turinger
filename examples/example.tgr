@@ -4,16 +4,26 @@ TM first_tm : {
 	l0 _ 1 r l1
 	@ state l0 -> state l2 @
 	l0 * * * l2
-	@ state l0 -> state l3 @
-	l0 _ 1 l l3
+	@ state l0 -> state accept @
+	l0 _ 1 l accept
 }
 
 TM second_tm: {
 	init a0
-	@ state a0 -> state a1 @
-	a0 1 _ l a1
+	@ state a0 -> state accept @
+	a0 1 _ l accept
 	@ base case @
-	a0 * * * a0
+	a0 * * * reject
+}
+
+TM third_tm: {
+	init l0
+	@ state l0 -> state l1 @
+	l0 _ 1 r accept
+	@ state l0 -> state l2 @
+	l0 * * * l2
+	@ state l0 -> state l3 @
+	l0 _ 1 l l3
 }
 
 @ simulate the turing machine @

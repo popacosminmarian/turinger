@@ -5,6 +5,7 @@ import IO;
 import Exception;
 import String;
 import List;
+import Set;
 import Type;
 
 /*
@@ -18,7 +19,10 @@ import Type;
 // Main check function
 bool checkProgram(AProgram program) {
 	println("-- CHECKING PROGRAM --");
-	return checkTMNames(program) && checkSimulatedTMs(program) && succes();
+	return checkTMNames(program)
+		&& checkSimulatedTMs(program)
+		&& checkTMFinalStates(program)
+		&& succes();
 }
 
 // Check TM name uniqueness
@@ -54,13 +58,40 @@ bool checkSimulatedTMs(AProgram program) {
 	return true;
 }
 
-// Check that all simulations have positive step number
-
+// Check that all TMs have an accept (and reject) state
+bool checkTMFinalStates(AProgram program) {
+	for (/ATM tm := program.tms) {
+		// States of current TM
+		set[str] states = getAllTMStates(tm);
+		
+		// Check final states
+		if ("accept" in states) {
+			if ("reject" in states) {
+				println("TM " + tm.name + " has accept and reject states.");
+			} else {
+				println("TM " + tm.name + " has accept state.");
+			}
+		} else {
+			error("TM " + tm.name + " has no accept state");
+			return false;
+		}
+	}
+	return true;
+}
 
 
 
 
 /* ----- HELPER METHODS ----- */
+
+set[str] getAllTMStates(ATM tm) {
+	set[str] states = {tm.init};
+	for (/ATrans trans := tm.transitions) {
+		states = states + trans.source;
+		states = states + trans.target;
+	}
+	return states;
+}
 
 // Get TM names
 list[str] getTMNames(AProgram program) {
@@ -81,11 +112,11 @@ list[str] getSimTMNames(AProgram program) {
 }
 
 bool succes() {
-	println("CHECK SUCCESSFUL!\n");
+	println("Check successful!\n");
 	return true;
 }
 
 // Method for printing errors
 void error(str msg) {
-	println("ERROR: " + msg);
+	println("ERROR: " + msg + "\n");
 }
