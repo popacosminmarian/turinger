@@ -1,13 +1,12 @@
 module tgr::Syntax
 
 /*
- * Define concrete syntax for CCL. The language's specification is available in the PDF (Section 3)
-*/
-
+ * Concrete syntax for Turinger.
+ */
 
 start syntax Program = TM* tms Simulation* simulations;
 
-syntax TM = "TM" Str name ":" "init" "(" Str init ")" "{" Trans* trs "}";
+syntax TM = "TM" Str name ":" "{" "init" Str init Trans* trs "}";
 
 syntax Trans = Str source Char read Char replace Dir dir Str target;
 

@@ -9,12 +9,12 @@ void compile(AProgram p) {
 	sims = p.simulations;
 	if (size(tms) > 0) {
 		for(int i <- [0 .. size(tms)]) {
-			println(tms[i].name);
+			println(tms[i]);
 		}
 	}
 	if (size(sims) > 0) {
 		for(int i <- [0 .. size(sims)]) {
-			println(sims[i].input);
+			println(sims[i]);
 		}
 	}
 }
