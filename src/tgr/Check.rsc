@@ -8,23 +8,25 @@ import List;
 import Set;
 import Type;
 
+
 /*
- * -Implement a well-formedness checker for the CCL language. For this you must use the AST. 
- * - Hint: Map regular CST arguments (e.g., *, +, ?) to lists 
- * - Hint: Map lexical nodes to Rascal primitive types (bool, int, str)
- * - Hint: Use switch to do case distinction with concrete patterns
+ * ----- MAIN WELL_FORMEDNESS CHECKER METHOD -----
  */
-
-
-// Main check function
 bool checkProgram(AProgram program) {
 	log("-- CHECKING PROGRAM --");
 	return checkTMNames(program)
 		&& checkSimulatedTMs(program)
 		&& checkTMFinalStates(program)
 		&& checkTMDet(program)
+		&& checkTMOutTrans(program)
+		&& checkTMDefTrans(program)
 		&& succes();
 }
+
+
+/*
+ * ----- CHECKER METHODS -----
+ */
 
 // Check TM name uniqueness
 bool checkTMNames(AProgram program) {
@@ -82,7 +84,7 @@ bool checkTMFinalStates(AProgram program) {
 	return true;
 }
 
-// Check that all TMs are deterministic ( (source, read) is PK for transitions)
+// Check that all TMs are deterministic ((source, read) is PK for transitions)
 bool checkTMDet(AProgram program) {
 	for (/ATM tm := program.tms) {
 		// Get first duplicate pair from tm
@@ -99,13 +101,72 @@ bool checkTMDet(AProgram program) {
 	return true;
 }
 
+// Check that all non-final states have outbound transitions
+bool checkTMOutTrans(AProgram program) {
+	for (/ATM tm := program.tms) {
+		// Get state with no default transition
+		set[str] states = getStatesNoOut(tm);
+		
+		// Check if TM is has non-default transition
+		if (states != {}) {
+			error("TM " + tm.name + ": states " + toString(states) + " have no outbound transitions");
+			return false;
+		}
+	}
+	
+	log("All non-final states have outbound transitions.");
+	return true;
+}
+
+// Check that all TMs have default transitions (for non-specified input characters)
+bool checkTMDefTrans(AProgram program) {
+	for (/ATM tm := program.tms) {
+		// Get state with no default transition
+		set[str] states = getStatesNoDef(tm);
+		
+		// Check if TM is has non-default transition
+		if (states != {}) {
+			error("TM " + tm.name + ": states " + toString(states) + " have no default transitions");
+			return false;
+		}
+	}
+	
+	log("All TMs have default transitions.");
+	return true;
+}
 
 
-/* ----- HELPER METHODS ----- */
 
+
+/* 
+ * ----- HELPER METHODS -----
+ */
+
+// Get states with no default transitions (e.g.: state * * * otherState)
+set[str] getStatesNoDef(ATM tm) {
+	set[str] statesWithDefault = {};
+	set[str] states = getAllTMStates(tm);
+	for (/ATrans trans := tm.transitions) {
+		if (trans.read == "*") {
+			statesWithDefault = statesWithDefault + trans.source;
+		}
+	}
+	return states - statesWithDefault - {"accept", "reject"};
+}
+
+// Get non-final states with no outbound transitions
+set[str] getStatesNoOut(ATM tm) {
+	set[str] statesWithOut = {};
+	set[str] states = getAllTMStates(tm);
+	for (/ATrans trans := tm.transitions) {
+		statesWithOut = statesWithOut + trans.source;
+	}
+	return states - statesWithOut - {"accept", "reject"};
+}
+
+// Get first (source, read) pair that appears twice
 tuple[str, str] getFirstDupSourceReadPair(ATM tm) {
 	list[tuple[str, str]] keys = [];
-	list[tuple[str, str, str, str, str]] transitions = []; // for duplicates
 	for (/ATrans trans := tm.transitions) {
 		if (<trans.source, trans.read> in keys) {
 			return <trans.source, trans.read>;
@@ -116,6 +177,7 @@ tuple[str, str] getFirstDupSourceReadPair(ATM tm) {
 	return <"OK", "OK">;
 }
 
+// Get TM states
 set[str] getAllTMStates(ATM tm) {
 	set[str] states = {tm.init};
 	for (/ATrans trans := tm.transitions) {
@@ -143,16 +205,18 @@ list[str] getSimTMNames(AProgram program) {
 	return names;
 }
 
+// Log a string; change the println() to whatever is needed
 void log(str msg) {
 	println(msg);
 }
 
+// Only logs if all checks successful
 bool succes() {
-	println("Check successful!\n");
+	log("Check successful!\n");
 	return true;
 }
 
-// Method for printing errors
+// Method for logging errors
 void error(str msg) {
-	log("ERROR: " + msg + "\n");
+	log("ERROR: " + msg + "!\n");
 }
