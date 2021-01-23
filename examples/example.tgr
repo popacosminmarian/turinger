@@ -22,16 +22,16 @@ TM second_tm: {
 TM third_tm: {
 	init l0
 	@ state l0 -> state accept @
-	l0 _ 1 r accept
+	l3 _ 1 r l2
 	@ state l0 -> state l2 @
 	l0 * * * l2
 	@ state l0 -> state l3 @
-	l2 1 1 l l3
-	l3 1 1 l l3
+	l2 1 _ l l3
+	l2 0 W * accept
 	l2 * * * l3
 	l3 * * * l2
 }
 
 @ simulate the turing machine @
-simulate first_tm(1001) 100
-simulate second_tm(100_b1) 100
+simulate third_tm(1001) 100
+simulate third_tm(101) 3

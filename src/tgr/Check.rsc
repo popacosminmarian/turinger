@@ -46,10 +46,10 @@ bool checkTMNames(AProgram program) {
 // Check that all simulated TMs exist
 bool checkSimulatedTMs(AProgram program) {
 	// TM names list
-	list[str] names = getTMNames(program);
+	set[str] names = toSet(getTMNames(program));
 	
 	// Simulated TM names list
-	list[str] simNames = getSimTMNames(program);
+	set[str] simNames = toSet(getSimTMNames(program));
 	
 	// Report non-existent TMs
 	if (size(simNames - names) > 0) {
