@@ -13,14 +13,14 @@ str compile(AProgram p) {
 	
 	str compiledProgram = "";
 	
-	// add turing machines
+	// Add turing machines
 	if (size(tms) > 0) {
 		for(int i <- [0 .. size(tms)]) {
 			compiledProgram += buildTM(tms[i]);
 		}
 	}
 	
-	// add simulations
+	// Add simulations
 	if (size(sims) > 0) {
 		for(int i <- [0 .. size(sims)]) {
 			compiledProgram += buildSim(sims[i]);
@@ -31,7 +31,7 @@ str compile(AProgram p) {
 }
 
 str buildTM(ATM tm) {
-	// initialize tm function
+	// Initialize TM function
 	str tmFunc = "def " + tm.name + "(inputtape, steps):\n";
 	tmFunc += "    length = len(inputtape) + 2\n";
 	tmFunc += "    tape = [\'_\']*length\n";
@@ -52,7 +52,7 @@ str buildTM(ATM tm) {
 	tmFunc += "        print \"\\n\"\n";
 	tmFunc += "        step += 1\n\n";
 	
-	// increase length of tape if necessary
+	// Increase length of tape if necessary
 	tmFunc += "        if tapehead == 0:\n";
 	tmFunc += "            tape.insert(0, \"_\")\n";
 	tmFunc += "            tapehead += 1\n";
@@ -60,10 +60,10 @@ str buildTM(ATM tm) {
 	tmFunc += "            tape.append(\"_\")\n";
 	tmFunc += "            tapehead -= 1\n\n";
 	
-	// store base case transitions to put them at the end
+	// Store base case transitions to put them at the end
 	str baseCases = "";
 	
-	// add all transitions as if-statements
+	// Add all transitions as if-statements
 	if (size(tm.transitions) > 0) {
 		trsList = toList(tm.transitions);
 		for (int i <- [0 .. size(tm.transitions)]) {
@@ -77,10 +77,10 @@ str buildTM(ATM tm) {
 		}
 	}
 	
-	// add the base cases at the end
+	// Add the base cases at the end
 	tmFunc += baseCases;
 	
-	// print last case
+	// Print last case
 	tmFunc += "    print \"Step \" + str(step - 1) + \":\"\n";
 	tmFunc += "    print \"State \" + state\n";
 	tmFunc += "    for x in range(len(tape)):\n";
@@ -127,7 +127,7 @@ tuple[str tr, bool baseCase] buildTransition(ATrans tr) {
 }
 
 str buildSim(ASim sim) {
-	// print GREEN TM name, input, strings
+	// Print GREEN TM name, input, strings
 	str simCall = "print \'\\033[1m\' + \'\\033[92m\' + \"Turing Machine " + sim.tm + " with initial tape " 
 					+ sim.input + " for " + toString(sim.steps) + " steps\" + \'\\033[0m\' + \"\\n\"\n";
 	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + ")\n";

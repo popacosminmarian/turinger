@@ -14,7 +14,7 @@ import util::ShellExec;
 void compileProgram(loc fil) {
 	// Parsing
 	start[Program] program = parseTGR(fil.top);
-	// output file - <name>.py
+	// Output file - <name>.py
 	out = (program@\loc)[extension="py"].top;
 	// Transform the parse tree into an abstract syntax tree
 	&T ast = cst2ast(program);
@@ -26,9 +26,9 @@ void compileProgram(loc fil) {
 }
 
 /*
-* This is the main function of the project. This function enables the editor's syntax highlighting.
-* After calling this function from the terminal, all files with extension .tgr will be parsed using the parser defined in module tgr::Parser.
-*/
+ * This is the main function of the project. This function enables the editor's syntax highlighting.
+ * After calling this function from the terminal, all files with extension .tgr will be parsed using the parser defined in module tgr::Parser.
+ */
 void main() {
 	registerLanguage("turinger", "tgr", Tree(str _, loc path) {
 		return parseTGR(path);
