@@ -8,6 +8,7 @@ import IO;
 import Boolean;
 
 str compile(AProgram p) {
+	log("-- COMPILING PROGRAM --");
 	tms = p.tms;
 	sims = p.simulations;
 	
@@ -19,6 +20,7 @@ str compile(AProgram p) {
 			compiledProgram += buildTM(tms[i]);
 		}
 	}
+	log("TMs have been compiled.");
 	
 	// Add simulations
 	if (size(sims) > 0) {
@@ -26,7 +28,9 @@ str compile(AProgram p) {
 			compiledProgram += buildSim(sims[i]);
 		}
 	}
+	log("Simulations have been compiled.");
 	
+	log("Compiled successfully!");
 	return compiledProgram;
 }
 
@@ -132,4 +136,9 @@ str buildSim(ASim sim) {
 					+ sim.input + " for " + toString(sim.steps) + " steps\" + \'\\033[0m\' + \"\\n\"\n";
 	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + ")\n";
 	return simCall;
+}
+
+// Log a string; change the println() to whatever is needed
+void log(str msg) {
+	println(msg);
 }

@@ -21,7 +21,6 @@ void compileProgram(loc fil) {
 	if (checkProgram(ast)) {
 		// Compile the program and write the output to file
 		writeFile(out, compile(ast));
-		println("Compiled successfully!");
 	}
 }
 
