@@ -19,7 +19,7 @@ ATM cst2ast(TM t) {
 }
 
 ASim cst2ast(Simulation s) {
-	return sim("<s.tm>", "<s.input>", toInt("<s.steps>"));
+	return sim("<s.tm>", "<s.input>", toInt("<s.steps>"), toInt("<s.skip>"));
 }
 
 ATrans cst2ast(Trans tr) {

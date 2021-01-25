@@ -12,7 +12,7 @@ syntax Trans = Str source Char read Char replace Dir dir Str target;
 
 syntax Dir = "l" | "L" | "r" | "R" | "*";
 
-syntax Simulation = "simulate" Str tm "(" InputChar* input ")" Int steps;
+syntax Simulation = "simulate" Str tm "(" InputChar* input ")" Int steps "skip" Int skip;
 
 // Helpers and lexicals
 lexical Int = [0-9]+ !>> [0-9];

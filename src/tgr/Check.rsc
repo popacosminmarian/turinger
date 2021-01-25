@@ -20,6 +20,7 @@ bool checkProgram(AProgram program) {
 		&& checkTMDet(program)
 		&& checkTMOutTrans(program)
 		&& checkTMDefTrans(program)
+		&& checkValidSkip(program)
 		&& succes();
 }
 
@@ -135,7 +136,18 @@ bool checkTMDefTrans(AProgram program) {
 	return true;
 }
 
-
+// Check that for all simulation the skip is leq the total amount of steps
+bool checkValidSkip(AProgram program) {
+	for (/ASim sim := program.simulations) {
+		if (sim.skip > sim.steps) {
+			error("simulation skip larger than total number of steps");
+			return false;
+		}
+	}
+	
+	log("All simulations have valid skip values.");
+	return true;
+}
 
 
 /* 

@@ -33,5 +33,5 @@ TM third_tm: {
 }
 
 @ simulate the turing machine @
-simulate third_tm(1001) 100
-simulate third_tm(101) 3
+simulate third_tm(1001) 100 skip 5
+simulate third_tm(101) 3 skip 1
