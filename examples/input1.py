@@ -175,9 +175,193 @@ def anbncn(inputtape, steps):
             print ">",
         print tape[x],
     print "\n\n"
+def mirror(inputtape, steps):
+    length = len(inputtape) + 2
+    tape = ['_']*length
+    i = 1
+    tapehead = 1
+    for s in inputtape:
+        tape[i] = s
+        i += 1
+    state = "s0"
+    step = 1
+    while (step <= steps and state != "accept" and state != "reject"):
+        print "Step " + str(step - 1) + ":"
+        print "State " + state
+        for x in range(len(tape)):
+            if x == tapehead:
+                print ">",
+            print tape[x],
+        print "\n"
+        step += 1
+
+        if tapehead == 0:
+            tape.insert(0, "_")
+            tapehead += 1
+        if tapehead == len(tape) - 1:
+            tape.append("_")
+            tapehead -= 1
+
+        if state == "s0":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "1"
+                state = "s0"
+                tapehead += 1
+                continue
+        if state == "s0":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "0"
+                state = "s0"
+                tapehead += 1
+                continue
+        if state == "s1":
+            if tape[tapehead] == "_":
+                tape[tapehead] = "_"
+                state = "s4"
+                tapehead += 1
+                continue
+        if state == "s2":
+            if tape[tapehead] == "a":
+                tape[tapehead] = "a"
+                state = "s2"
+                tapehead += 1
+                continue
+        if state == "s1":
+            if tape[tapehead] == "a":
+                tape[tapehead] = "a"
+                state = "s1"
+                tapehead -= 1
+                continue
+        if state == "s2":
+            if tape[tapehead] == "_":
+                tape[tapehead] = "0"
+                state = "s5"
+                tapehead -= 1
+                continue
+        if state == "s2":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "1"
+                state = "s2"
+                tapehead += 1
+                continue
+        if state == "s2":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "0"
+                state = "s2"
+                tapehead += 1
+                continue
+        if state == "s1":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "a"
+                state = "s3"
+                tapehead += 1
+                continue
+        if state == "s1":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "a"
+                state = "s2"
+                tapehead += 1
+                continue
+        if state == "s0":
+            if tape[tapehead] == "_":
+                tape[tapehead] = "a"
+                state = "s1"
+                tapehead -= 1
+                continue
+        if state == "s4":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "1"
+                state = "accept"
+                continue
+        if state == "s4":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "0"
+                state = "accept"
+                continue
+        if state == "s3":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "1"
+                state = "s3"
+                tapehead += 1
+                continue
+        if state == "s3":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "0"
+                state = "s3"
+                tapehead += 1
+                continue
+        if state == "s5":
+            if tape[tapehead] == "a":
+                tape[tapehead] = "a"
+                state = "s1"
+                tapehead -= 1
+                continue
+        if state == "s4":
+            if tape[tapehead] == "a":
+                tape[tapehead] = "_"
+                state = "s4"
+                tapehead += 1
+                continue
+        if state == "s3":
+            if tape[tapehead] == "_":
+                tape[tapehead] = "1"
+                state = "s5"
+                tapehead -= 1
+                continue
+        if state == "s5":
+            if tape[tapehead] == "1":
+                tape[tapehead] = "1"
+                state = "s5"
+                tapehead -= 1
+                continue
+        if state == "s5":
+            if tape[tapehead] == "0":
+                tape[tapehead] = "0"
+                state = "s5"
+                tapehead -= 1
+                continue
+        if state == "s3":
+            if tape[tapehead] == "a":
+                tape[tapehead] = "a"
+                state = "s3"
+                tapehead += 1
+                continue
+        if state == "s4":
+            if tape[tapehead] == "_":
+                state = "accept"
+                continue
+        if state == "s0":
+            state = "reject"
+            continue
+        if state == "s2":
+            state = "reject"
+            continue
+        if state == "s1":
+            state = "reject"
+            continue
+        if state == "s4":
+            state = "reject"
+            continue
+        if state == "s3":
+            state = "reject"
+            continue
+        if state == "s5":
+            state = "reject"
+            continue
+    print "Step " + str(step - 1) + ":"
+    print "State " + state
+    for x in range(len(tape)):
+        if x == tapehead:
+            print ">",
+        print tape[x],
+    print "\n\n"
 print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape aaabbbccc for 100 steps" + '\033[0m' + "\n"
 anbncn("aaabbbccc", 100)
 print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape abbbcccc for 100 steps" + '\033[0m' + "\n"
 anbncn("abbbcccc", 100)
 print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape invalid for 100 steps" + '\033[0m' + "\n"
 anbncn("invalid", 100)
+print '\033[1m' + '\033[92m' + "Turing Machine mirror with initial tape 1100100 for 100 steps" + '\033[0m' + "\n"
+mirror("1100100", 100)
+print '\033[1m' + '\033[92m' + "Turing Machine mirror with initial tape 10011101 for 100 steps" + '\033[0m' + "\n"
+mirror("10011101", 100)

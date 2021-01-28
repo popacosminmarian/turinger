@@ -39,6 +39,48 @@ TM anbncn : {
 	s4 * * * reject
 }
 
+TM mirror : {
+	@ Mirror of a word with symbols 0 and 1 @
+	init s0
+	
+	s0 0 0 r s0
+	s0 1 1 r s0
+	s0 _ a l s1
+	s0 * * * reject
+
+	s1 0 a r s2
+	s1 1 a r s3
+	s1 _ _ r s4
+	s1 a a l s1
+	s1 * * * reject
+
+	s2 0 0 r s2
+	s2 1 1 r s2
+	s2 _ 0 l s5
+	s2 a a r s2
+	s2 * * * reject
+
+	s3 0 0 r s3
+	s3 1 1 r s3
+	s3 _ 1 l s5
+	s3 a a r s3
+	s3 * * * reject
+
+	s4 a _ r s4
+	s4 0 0 * accept
+	s4 1 1 * accept
+	s4 _ * * accept
+	s4 * * * reject
+
+	s5 1 1 l s5
+	s5 0 0 l s5
+	s5 a a l s1
+	s5 * * * reject
+}
+
 simulate anbncn(aaabbbccc) 100 skip 1
 simulate anbncn(abbbcccc) 100 skip 1
 simulate anbncn(invalid) 100 skip 1
+
+simulate mirror(1100100) 100 skip 1
+simulate mirror(10011101) 100 skip 10
