@@ -47,13 +47,13 @@ str buildTM(ATM tm) {
 	tmFunc += "    state = \"" + tm.init + "\"\n";
 	tmFunc += "    step = 1\n";
 	tmFunc += "    while (step \<= steps and state != \"accept\" and state != \"reject\"):\n";
-	tmFunc += "        print(\"Step \" + str(step - 1) + \":\"\n)";
-	tmFunc += "        print(\"State \" + state\n)";
+	tmFunc += "        print(\"Step \" + str(step - 1) + \":\")\n";
+	tmFunc += "        print(\"State \" + state)\n";
 	tmFunc += "        for x in range(len(tape)):\n";
 	tmFunc += "            if x == tapehead:\n";
 	tmFunc += "                print(\"\>\",\n)";
-	tmFunc += "            print(tape[x],\n)";
-	tmFunc += "        print(\"\\n\"\n)";
+	tmFunc += "            print(tape[x])\n";
+	tmFunc += "        print(\"\\n\")\n";
 	tmFunc += "        step += 1\n\n";
 	
 	// Increase length of tape if necessary
@@ -85,13 +85,13 @@ str buildTM(ATM tm) {
 	tmFunc += baseCases;
 	
 	// Print last case
-	tmFunc += "    print(\"Step \" + str(step - 1) + \":\"\n)";
-	tmFunc += "    print(\"State \" + state\n)";
+	tmFunc += "    print(\"Step \" + str(step - 1) + \":\")\n";
+	tmFunc += "    print(\"State \" + state)\n";
 	tmFunc += "    for x in range(len(tape)):\n";
 	tmFunc += "        if x == tapehead:\n";
 	tmFunc += "            print(\"\>\",\n)";
-	tmFunc += "        print(tape[x],\n)";
-	tmFunc += "    print(\"\\n\\n\"\n)";
+	tmFunc += "        print(tape[x])\n";
+	tmFunc += "    print(\"\\n\\n\")\n";
 	
 	return tmFunc;
 }
@@ -133,8 +133,8 @@ tuple[str tr, bool baseCase] buildTransition(ATrans tr) {
 str buildSim(ASim sim) {
 	// Print GREEN TM name, input, strings
 	str simCall = "print(\'\\033[1m\' + \'\\033[92m\' + \"Turing Machine " + sim.tm + " with initial tape " 
-					+ sim.input + " for " + toString(sim.steps) + " steps\" + \'\\033[0m\' + \"\\n\"\n)";
-	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + "\n)";
+					+ sim.input + " for " + toString(sim.steps) + " steps\" + \'\\033[0m\' + \"\\n\")\n";
+	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + ")\n";
 	return simCall;
 }
 
