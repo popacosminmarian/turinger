@@ -9,13 +9,13 @@ def anbncn(inputtape, steps):
     state = "s0"
     step = 1
     while (step <= steps and state != "accept" and state != "reject"):
-        print("Step " + str(step - 1) + ":")
-        print("State " + state)
+        print "Step " + str(step - 1) + ":"
+        print "State " + state
         for x in range(len(tape)):
             if x == tapehead:
-                print(">")
-            print(tape[x])
-        print("\n")
+                print ">",
+            print tape[x],
+        print "\n"
         step += 1
 
         if tapehead == 0:
@@ -168,16 +168,16 @@ def anbncn(inputtape, steps):
         if state == "s3":
             state = "reject"
             continue
-    print("Step " + str(step - 1) + ":")
-    print("State " + state)
+    print "Step " + str(step - 1) + ":"
+    print "State " + state
     for x in range(len(tape)):
         if x == tapehead:
-            print(">")
-        print(tape[x])
-    print("\n\n")
-print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape aaabbbccc for 100 steps" + '\033[0m' + "\n")
+            print ">",
+        print tape[x],
+    print "\n\n"
+print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape aaabbbccc for 100 steps" + '\033[0m' + "\n"
 anbncn("aaabbbccc", 100)
-print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape abbbcccc for 100 steps" + '\033[0m' + "\n")
+print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape abbbcccc for 100 steps" + '\033[0m' + "\n"
 anbncn("abbbcccc", 100)
-print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape invalid for 100 steps" + '\033[0m' + "\n")
+print '\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape invalid for 100 steps" + '\033[0m' + "\n"
 anbncn("invalid", 100)
