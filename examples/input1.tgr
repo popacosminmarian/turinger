@@ -1,0 +1,44 @@
+TM anbncn : {
+	@ This TM expects only input with chars a, b and c @
+	@ This machine accepts only strings of the type a^nb^nc^n @
+	init s0
+	
+	s0 _ * * accept
+	s0 a _ r s1
+	s0 b * * reject
+	s0 c * * reject
+	s0 x x r s4
+	s0 * * * reject @ unknown character @
+	
+	s1 a a r s1
+	s1 b x r s2
+	s1 c * * reject
+	s1 _ * * reject
+	s1 x x r s1
+	s1 * * * reject
+	
+	s2 a * * reject
+	s2 b b r s2
+	s2 c x l s3
+	s2 _ * * reject
+	s2 x x r s2
+	s2 * * * reject
+	
+	s3 x x l s3
+	s3 a a l s3
+	s3 b b l s3
+	s3 c c l s3
+	s3 _ _ r s0
+	s3 * * * reject
+	
+	s4 x x r s4
+	s4 a * * reject
+	s4 b * * reject
+	s4 c * * reject
+	s4 _ * * accept
+	s4 * * * reject
+}
+
+simulate anbncn(aaabbbccc) 100 skip 1
+simulate anbncn(abbbcccc) 100 skip 1
+simulate anbncn(invalid) 100 skip 1
