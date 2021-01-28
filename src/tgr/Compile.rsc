@@ -36,7 +36,7 @@ str compile(AProgram p) {
 
 str buildTM(ATM tm) {
 	// Initialize TM function
-	str tmFunc = "def " + tm.name + "(inputtape, steps):\n";
+	str tmFunc = "def " + tm.name + "(inputtape, steps, skip):\n";
 	tmFunc += "    length = len(inputtape) + 2\n";
 	tmFunc += "    tape = [\'_\']*length\n";
 	tmFunc += "    i = 1\n";
@@ -47,13 +47,14 @@ str buildTM(ATM tm) {
 	tmFunc += "    state = \"" + tm.init + "\"\n";
 	tmFunc += "    step = 1\n";
 	tmFunc += "    while (step \<= steps and state != \"accept\" and state != \"reject\"):\n";
-	tmFunc += "        print \"Step \" + str(step - 1) + \":\"\n";
-	tmFunc += "        print \"State \" + state\n";
-	tmFunc += "        for x in range(len(tape)):\n";
-	tmFunc += "            if x == tapehead:\n";
-	tmFunc += "                print \"\>\",\n";
-	tmFunc += "            print tape[x],\n";
-	tmFunc += "        print \"\\n\"\n";
+	tmFunc += "        if (step == 1 or (skip != 0 and (step - 1) % skip == 0)):\n";
+	tmFunc += "            print \"Step \" + str(step - 1) + \":\"\n";
+	tmFunc += "            print \"State \" + state\n";
+	tmFunc += "            for x in range(len(tape)):\n";
+	tmFunc += "                if x == tapehead:\n";
+	tmFunc += "                    print \"\>\",\n";
+	tmFunc += "                print tape[x],\n";
+	tmFunc += "            print \"\\n\"\n";
 	tmFunc += "        step += 1\n\n";
 	
 	// Increase length of tape if necessary
@@ -134,7 +135,7 @@ str buildSim(ASim sim) {
 	// Print GREEN TM name, input, strings
 	str simCall = "print \'\\033[1m\' + \'\\033[92m\' + \"Turing Machine " + sim.tm + " with initial tape " 
 					+ sim.input + " for " + toString(sim.steps) + " steps\" + \'\\033[0m\' + \"\\n\"\n";
-	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + ")\n";
+	simCall += sim.tm + "(\"" + sim.input + "\", " + toString(sim.steps) + ", " + toString(sim.skip) + ")\n";
 	return simCall;
 }
 
