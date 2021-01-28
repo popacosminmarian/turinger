@@ -39,6 +39,6 @@ TM anbncn : {
 	s4 * * * reject
 }
 
-simulate anbncn(aaabbbccc) 100 skip 1
-simulate anbncn(abbbcccc) 100 skip 1
-simulate anbncn(invalid) 100 skip 1
+simulate anbncn(aaabbbccc) 100
+simulate anbncn(abbbcccc) 100
+simulate anbncn(invalid) 100
