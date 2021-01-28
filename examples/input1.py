@@ -13,9 +13,8 @@ def anbncn(inputtape, steps):
         print("State " + state)
         for x in range(len(tape)):
             if x == tapehead:
-                #print(">")
-                break
-        print(tape)
+                print(">")
+            print(tape[x])
         print("\n")
         step += 1
 
@@ -173,13 +172,12 @@ def anbncn(inputtape, steps):
     print("State " + state)
     for x in range(len(tape)):
         if x == tapehead:
-            #print(">")
-            break
-    print(tape)
+            print(">")
+        print(tape[x])
     print("\n\n")
 print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape aaabbbccc for 100 steps" + '\033[0m' + "\n")
 anbncn("aaabbbccc", 100)
-# print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape abbbcccc for 100 steps" + '\033[0m' + "\n")
-# anbncn("abbbcccc", 100)
-# print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape invalid for 100 steps" + '\033[0m' + "\n")
-# anbncn("invalid", 100)
+print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape abbbcccc for 100 steps" + '\033[0m' + "\n")
+anbncn("abbbcccc", 100)
+print('\033[1m' + '\033[92m' + "Turing Machine anbncn with initial tape invalid for 100 steps" + '\033[0m' + "\n")
+anbncn("invalid", 100)
