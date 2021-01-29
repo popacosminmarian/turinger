@@ -18,8 +18,8 @@ ATM cst2ast(TM t) {
 	return tm("<t.name>", "<t.init>", {cst2ast(tr) | (Trans tr <- t.trs)});
 }
 
-ASim cst2ast((Simulation)`simulate <Str tm>(<InputChar* input>) <Int steps> show-every <Int skip>`) {
-	return sim("<tm>", "<input>", toInt("<steps>"), toInt("<skip>"));
+ASim cst2ast((Simulation)`simulate <Str tm>(<InputChar* input>) <Int steps> show-every <Int showevery>`) {
+	return sim("<tm>", "<input>", toInt("<steps>"), toInt("<showevery>"));
 }
 
 ASim cst2ast((Simulation)`simulate <Str tm>(<InputChar* input>) <Int steps>`) {
