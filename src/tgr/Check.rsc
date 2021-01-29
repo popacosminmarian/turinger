@@ -139,7 +139,7 @@ bool checkTMDefTrans(AProgram program) {
 // Check that for all simulation the skip is leq the total amount of steps
 bool checkValidSkip(AProgram program) {
 	for (/ASim sim := program.simulations) {
-		if (sim.skip > sim.steps) {
+		if (sim.showevery > sim.steps) {
 			error("simulation skip larger than total number of steps");
 			return false;
 		}

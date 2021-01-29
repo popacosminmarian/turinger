@@ -82,5 +82,4 @@ simulate anbncn(aaabbbccc) 100
 simulate anbncn(abbbcccc) 100
 simulate anbncn(invalid) 100
 
-simulate mirror(1100100) 100
-simulate mirror(10011101) 100 show-every 10
+simulate mirror(1100100) 200

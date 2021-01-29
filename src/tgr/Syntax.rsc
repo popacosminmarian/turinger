@@ -12,7 +12,7 @@ syntax Trans = Str source Char read Char replace Dir dir Str target;
 
 syntax Dir = "l" | "L" | "r" | "R" | "*";
 
-syntax Simulation = "simulate" Str tm "(" InputChar* input ")" Int steps "show-every" Int skip 
+syntax Simulation = "simulate" Str tm "(" InputChar* input ")" Int steps "show-every" Int showevery 
 				  |  "simulate" Str tm "(" InputChar* input ")" Int steps;
 
 // Helpers and lexicals
