@@ -1,0 +1,71 @@
+TM big_tm : {
+	@ This TM accepts all words of the type a^nb^nc^ma^{2n} @
+	init s0
+	
+	s0 a _ r s1
+	s0 b * * reject
+	s0 c c r s8
+	s0 _ * * accept
+	s0 x _ r s5
+	s0 * * * reject
+	
+	s1 a a r s1
+	s1 b x r s2
+	s1 c c l reject
+	s1 x x r s1
+	s1 _ * * reject
+	s1 * * * reject
+	
+	s2 a a r s2
+	s2 b b r s2
+	s2 c c r s2
+	s2 x x r s2
+	s2 _ _ l s3
+	s2 * * * reject
+	
+	s3 a _ l s4
+	s3 b * * reject
+	s3 c * * reject
+	s3 x * * reject
+	s3 _ * * reject
+	s3 * * * reject
+	
+	s4 a a l s4
+	s4 b b l s4
+	s4 c c l s4
+	s4 x x l s4
+	s4 _ _ r s0
+	s4 * * * reject
+	
+	s5 x x r s5
+	s5 a a r s5
+	s5 b * * reject
+	s5 c c r s5
+	s5 _ _ l s6
+	s5 * * * reject
+	
+	s6 a _ l s7
+	s6 b * * reject
+	s6 c * * reject
+	s6 x * * reject
+	s6 _ * * reject
+	s6 * * * reject
+	
+	s7 a a l s7
+	s7 c c l s7
+	s7 x x l s7
+	s7 b * * reject
+	s7 _ _ r s0
+	s7 * * * reject
+	
+	s8 c c r s8
+	s8 _ _ r accept
+	s8 a * * reject
+	s8 b * * reject
+	s8 x * * reject
+	s8 * * * reject
+}
+
+simulate big_tm(aaabbbcaaaaaa) 200
+simulate big_tm(aaabbbcaaaaaaa) 200
+simulate big_tm(aaabbaaaaaa) 100
